@@ -1,17 +1,17 @@
-# Side car for Kubenetes
+# Sidecar for Kubenetes
 
 ## Introduce
 
-Khái niệm side-car, kubernetes,... tham vấn anh TiếnDK và anh BéoCNN (ThanhCNN)
+Đọc thêm các khái niệm về Sidecar service mesh K8s
 
 ## Tutorial
 
 ### Tạo TLS Cert:
 
-Giả sử chúng ta có Cluster là MEP Cluster SANDBOX, generate TLS Cert như sau:
+Giả sử chúng ta có Cluster là k8s Cluster SANDBOX, generate TLS Cert như sau:
 
     $ cd ./tls/
-    $ DEPLOYMENT=mep-cluster CLUSTER=SANDBOX ./new-cluster-injector-cert.rb
+    $ DEPLOYMENT=k8s-cluster CLUSTER=SANDBOX ./new-cluster-injector-cert.rb
     $ git ls-files -o
     .srl
     us-east-1/PRODUCTION/ca.crt
@@ -24,7 +24,7 @@ Giả sử chúng ta có Cluster là MEP Cluster SANDBOX, generate TLS Cert như
 
 Sau đó chúng ta tạo ra 1 CA Cert dưới dạng mã hoá BASE64 như sau:
 
-    > $ CABUNDLE_BASE64="$(cat ./tls/mep-cluster/SANDBOX/ca.crt |base64|tr -d '\n')"
+    > $ CABUNDLE_BASE64="$(cat ./tls/k8s-cluster/SANDBOX/ca.crt |base64|tr -d '\n')"
     > $ echo $CABUNDLE_BASE64
     > LS0tLS........=
 
@@ -36,7 +36,7 @@ Thay key vừa tạo ra vào vị trí __CA_BUNDLE_BASE64__ trong file ./kuberne
 
 Tạo ra 1 secret key với câu lệnh sau:
 
-    $ kubectl create secret generic devops-sidecar-injector --from-file=./tls/mep-cluster/SANDBOX/sidecar-injector.crt --from-file=./tls/mep-cluster/SANDBOX/sidecar-injector.key --namespace=devops
+    $ kubectl create secret generic devops-sidecar-injector --from-file=./tls/k8s-cluster/SANDBOX/sidecar-injector.crt --from-file=./tls/k8s-cluster/SANDBOX/sidecar-injector.key --namespace=devops
 
 Sau đó deploy tất cả các file .yaml trong folder kubernetes, file debug-pod.yaml deploy sau cùng, sau khi tất cả các resource kia đã **ready**
 

@@ -1,7 +1,7 @@
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: "mep-sidecar-injector-webhook"
+  name: "k8s-sidecar-injector-webhook"
   labels:
     app: devops-sidecar-injector
     track: sandbox
