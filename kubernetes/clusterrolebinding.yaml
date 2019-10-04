@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: devops-sidecar-injector
+subjects:
+  - kind: ServiceAccount
+    name: devops-sidecar-injector
+    namespace: devops
+roleRef:
+  kind: ClusterRole
+  name: devops-sidecar-injector
+  apiGroup: rbac.authorization.k8s.io

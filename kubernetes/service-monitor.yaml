@@ -1,0 +1,23 @@
+# NOTE: Phần này để monitoring by Prometheus
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: "devops-sidecar-injector-sandbox"
+  namespace: "devops"
+  labels:
+    devops-app: "devops-sidecar-injector"
+    track: "sandbox"
+spec:
+  endpoints:
+  - honorLabels: true
+    port: http-metrics
+    path: "/metrics"
+    interval: 30s
+  jobLabel: devops-app
+  namespaceSelector:
+    matchNames:
+    - devops
+  selector:
+    matchLabels:
+      devops-app: "devops-sidecar-injector"
+      track: "sandbox"
